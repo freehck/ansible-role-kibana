@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: Dmitrii Kashin
+  description: kibana in docker container
+  role_name: kibana
+  license: MIT
+
+  min_ansible_version: 2.8
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags:
+    - kibana
+
+dependencies:
+  - role: freehck.mkdir
+    vars:
+      mkdir_directories:
+        - path: "{{ kibana_srv_dir }}"

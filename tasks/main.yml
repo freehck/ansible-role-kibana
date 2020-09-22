@@ -1,0 +1,25 @@
+---
+
+- name: create env file
+  template:
+    src: "{{ kibana_env_file_template }}"
+    dest: "{{ kibana_env_file }}"
+    mode: 0640
+
+- name: deploy kibana container
+  docker_container:
+    name: "{{ kibana_ct_name }}"
+    image: "{{ kibana_ct_image }}"
+    hostname: "{{ kibana_ct_hostname }}"
+    env_file: "{{ kibana_env_file }}"
+    ports:
+      - "{{ kibana_bind_ip }}:{{ kibana_port }}:5601"
+    log_driver: "{{ kibana_ct_log_driver }}"
+    log_options:
+      max-size: "{{ kibana_ct_log_max_size }}"
+      max-file: "{{ kibana_ct_log_max_file }}"
+    restart_policy: "{{ kibana_ct_restart_policy }}"
+    state: "{{ kibana_ct_state }}"
+    restart: "{{ kibana_ct_restart }}"
+    pull: "{{ kibana_ct_pull }}"
+    recreate: "{{ kibana_ct_recreate }}"

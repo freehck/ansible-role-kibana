@@ -1,0 +1,30 @@
+---
+kibana_ct_name: "kibana"
+kibana_ct_image: "docker.elastic.co/kibana/kibana:7.8.1"
+kibana_ct_hostname: "{{ inventory_hostname }}"
+
+kibana_bind_ip: "{{ backnet_ip | default('127.0.0.1') }}"
+kibana_port: "5601"
+
+kibana_ct_restart_policy: "always"
+kibana_ct_state: "started"
+kibana_ct_restart: "{{ ct_restart | default(false) }}"
+kibana_ct_pull: "{{ ct_pull | default(true) }}"
+kibana_ct_recreate: "{{ ct_recreate | default(false) }}"
+
+kibana_ct_log_driver: "json-file"
+kibana_ct_log_max_size: "10m"
+kibana_ct_log_max_file: "3"
+
+kibana_env_file_template: "env.j2"
+kibana_srv_dir: "/srv/{{ kibana_ct_name }}"
+kibana_env_file: "{{ kibana_srv_dir }}/env"
+
+# additional configuration options
+
+# kibana_server_name: "kibana.mydomain.com"
+# kibana_elasticsearch_hosts_list:
+#   - "http://{{ backnet_ip }}:9200"
+kibana_elasticsearch_hosts: "{{ kibana_elasticsearch_hosts_list | join(',') }}"
+kibana_elasticsearch_username: "kibana"
+# kibana_elasticsearch_password: "secret"
